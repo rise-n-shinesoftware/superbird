@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:superbird/game/components/obstacle_pair_component.dart';
 import 'package:superbird/game/components/power_pickup_component.dart';
 
-class BirdComponent extends CircleComponent with CollisionCallbacks {
+class BirdComponent extends SpriteComponent with CollisionCallbacks {
   BirdComponent({
     required Vector2 position,
     required this.onObstacleCollision,
@@ -15,9 +15,8 @@ class BirdComponent extends CircleComponent with CollisionCallbacks {
       : velocityY = 0,
         super(
           position: position,
-          radius: 16,
+          size: Vector2(32, 32), // Adjust size based on your sprite
           anchor: Anchor.center,
-          paint: Paint()..color = const Color(0xFF2563EB),
         );
 
   final VoidCallback onObstacleCollision;
@@ -28,7 +27,8 @@ class BirdComponent extends CircleComponent with CollisionCallbacks {
 
   @override
   Future<void> onLoad() async {
-    add(CircleHitbox());
+    sprite = await Sprite.load('bird.png');
+    add(RectangleHitbox());
   }
 
   @override
@@ -40,6 +40,8 @@ class BirdComponent extends CircleComponent with CollisionCallbacks {
 
   void flap() {
     velocityY = flapVelocity;
+    // Optional: Switch to flap animation sprite
+    // sprite = await Sprite.load('bird_flap.png');
   }
 
   void reset(Vector2 startPosition) {

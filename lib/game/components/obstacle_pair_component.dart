@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
@@ -31,16 +29,18 @@ class ObstaclePairComponent extends PositionComponent {
     final bottomY = gapCenterY + (gapHeight / 2);
     final bottomHeight = worldHeight - bottomY;
 
-    final top = RectangleComponent(
+    // Top obstacle
+    final top = SpriteComponent(
+      sprite: await Sprite.load('pipe_top.png'),
       position: Vector2.zero(),
       size: Vector2(obstacleWidth, topHeight),
-      paint: Paint()..color = const Color(0xFF0F172A),
     )..add(RectangleHitbox());
 
-    final bottom = RectangleComponent(
+    // Bottom obstacle
+    final bottom = SpriteComponent(
+      sprite: await Sprite.load('pipe_bottom.png'),
       position: Vector2(0, bottomY),
       size: Vector2(obstacleWidth, bottomHeight),
-      paint: Paint()..color = const Color(0xFF0F172A),
     )..add(RectangleHitbox());
 
     addAll([top, bottom]);
